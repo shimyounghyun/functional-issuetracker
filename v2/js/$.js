@@ -1,4 +1,6 @@
 !function() {
+    const {curry2, find, defaults, method} = Functional;
+
     const baseSel = (method) => (sel, parent = document) => parent[method](sel);
 
     const $ = baseSel('querySelector');
@@ -18,7 +20,7 @@
 
     $.on = function(el, eventName, sel, f) {
         if (typeof el == 'string') return el => $.on(el, ...arguments);
-        if (typeof sel != 'string') return addEvent(...arguments);
+        if (typeof sel != 'string') return $.addEvent(...arguments);
 
         el.addEventListener(eventName, e=> go(
             el,

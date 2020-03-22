@@ -3,6 +3,8 @@
 
    const pipe = (...fs) => arg => reduce((arg, f) => f(arg), arg, fs);
 
+   const go = (arg, ...fs) => reduce((arg, f)=>f(arg), arg, fs);
+
    function *valuesIterObj(obj) {
        if (!obj) return;
        for (const key in obj) yield obj[key];
@@ -32,14 +34,14 @@
 
    const map = curry2((f, coll) => reduce((arr, v) => go(v, f, push(arr)), [], coll));
 
-   const set = (obj, k, v) => typeof k == 'string' ? (obj[key] = v, obj) : set(obj, ...k);
+   const set = (obj, k, v) => typeof k == 'string' ? (obj[k] = v, obj) : set(obj, ...k);
 
    const baseExtend = set => (target, ...objs) => reduce(reduce(set), target, map(entriesIterObj, objs));
 
    const extend = baseExtend(set);
    const defaults = baseExtend((target, [k,v]) => target.hasOwnProperty(k) ? target : set(target, k, v));
    const method = name => (obj, ..._) => obj[name](..._);
-   
+
    window.Functional = {
         curry2, pipe, go,
         map, reduce, find,
