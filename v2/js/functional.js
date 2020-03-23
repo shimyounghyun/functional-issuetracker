@@ -38,9 +38,17 @@
 
    const baseExtend = set => (target, ...objs) => reduce(reduce(set), target, map(entriesIterObj, objs));
 
+//    extend({},{e:3},{a:4, b:5})
+//    const extend = (target, ...objs) => reduce((target, obj)=> reduce(set, target, entriesIterObj(obj)), target, objs);
+//    const extend = (target, ...objs) => reduce(reduce(set),target, map(entriesIterObj, objs));
    const extend = baseExtend(set);
+
+// const defaults = (target, ...objs) => reduce((target, [k,v]=> target.hasOwnProperty(k) ? target : set(target, k, v)),target, map(entriesIterObj, objs));
    const defaults = baseExtend((target, [k,v]) => target.hasOwnProperty(k) ? target : set(target, k, v));
    const method = name => (obj, ..._) => obj[name](..._);
+
+   
+
 
    window.Functional = {
         curry2, pipe, go,
